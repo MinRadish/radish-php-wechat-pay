@@ -1,0 +1,22 @@
+{
+    "name": "min-radish/php-wechat-pay",
+    "description": "PHP对微信支付API的调用",
+    "keywords": ["PHP", "WeChat", "Pay", "API"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Radish",
+            "email": "1004622952@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.0.0",
+        "min-radish/php-curl": "~1.2"
+    },
+    "autoload": {
+        "psr-4": {
+          "Radish\\WeChatPay\\": "src/"
+        }
+    }
+}
