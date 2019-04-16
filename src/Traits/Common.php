@@ -46,8 +46,8 @@ trait Common
 
     /**
       * 获得随机字符串
-      * @param $len             需要的长度
-      * @param $special        是否需要特殊符号
+      * @param $len          需要的长度
+      * @param $special      是否需要特殊符号
       * @return string       返回随机字符串
       */
     public function getRandomStr($len = 20, $special = false)
@@ -85,6 +85,11 @@ trait Common
         return $serverIp;
     }
 
+    /**
+     * 请求响应错误信息
+     * @param  xml $xml 响应数据
+     * @return mixed    响应结果
+     */
     protected function getMessage($xml)
     {
         $array = $this->xmlToArray($xml);
@@ -93,5 +98,17 @@ trait Common
         } else {
             return $array;            
         }
+    }
+
+
+    public function jointString(array $params, $connector = '&')
+    {
+        $d = $string = '';
+        foreach ($params as $key => $val) {
+            $val && $string .= $d . $key . '=' . $val;
+            $d = $connector;
+        }
+
+        return $string;
     }
 }

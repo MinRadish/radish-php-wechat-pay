@@ -12,9 +12,12 @@ class ClassName extends AnotherClass
     protected static $mch_id = '';
     protected static $wxappid = '';
     protected static $key = '';
+    protected static $serverIp = '';
 
     use Traits\Common;
     use Traits\RedPacket;
+    use Traits\AccessToken;
+    use Traits\JsSdkConfig;
 
     public function __construct(array $options = [])
     {

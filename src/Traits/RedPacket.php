@@ -28,7 +28,7 @@ trait RedPacket
             'total_amount' => $options['total_amount'],
             'total_num' => isset($options['total_num']) ? $options['total_num'] : 1,
             'wishing' => $options['wishing'] ?: '恭喜发财',
-            'client_ip' => $this->getServerIp(),
+            'client_ip' => self::$serverIp,
             'act_name' => $options['act_name'] ?: '现金红包推广',
             'remark' => $options['remark'] ?: '备注信息',
             'scene_id' => $this->getSceneId($options['scene_id']),
@@ -50,12 +50,7 @@ trait RedPacket
      */
     public function sign($params, $connector = '&', $type = 'md5')
     {
-        $d = $sign = '';
-        foreach ($params as $key => $val) {
-            $val && $sign .= $d . $key . '=' . $val;
-            $d = $connector;
-        }
-        $sgin .= $sgin . $d . 'key=' . self::$key;
+        $sgin .= $this->jointString($params) . $connector . 'key=' . self::$key;
         if ($type == 'md5') {
             $sign = md5($sgin);
         }
