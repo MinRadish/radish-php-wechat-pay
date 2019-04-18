@@ -44,7 +44,7 @@ trait RedPacket
             CURLOPT_SSLKEY => self::$apiclient_key,
         ];
         $params = $this->arrayToXml($params, false);
-        $result = Curl::post($thsi->getRedPacket('send_red_pack'), $params, $option);
+        $result = Curl::post($this->getRedPacket('send_red_pack'), $params, $option);
 
         return $this->getMessage($result);
     }
