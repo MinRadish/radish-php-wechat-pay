@@ -22,7 +22,7 @@ trait RedPacket
             'nonce_str' => $this->getRandomStr(),
             'mch_billno' => $options['mch_billno'],
             'mch_id' => self::$mch_id,
-            'wxappid' => self::$wxappid,
+            'wxappid' => self::$appId,
             'send_name' => $options['send_name'],
             're_openid' => $options['open_id'],
             'total_amount' => $options['total_amount'],
@@ -34,9 +34,17 @@ trait RedPacket
             'scene_id' => $this->getSceneId($options['scene_id']),
             // 'risk_info'
         ];
-        $params['sgin'] = $this->sign($params);
+        $params['sign'] = strtoupper($this->sign($params));
+        $option = [
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_SSLCERTTYPE => 'PEM',
+            CURLOPT_SSLCERT => self::$apiclient_cert,
+            CURLOPT_SSLKEYTYPE => 'PEM',
+            CURLOPT_SSLKEY => self::$apiclient_key,
+        ];
         $params = $this->arrayToXml($params, false);
-        $result = Curl::post($thsi->getRedPacket('send_red_pack'), $params);
+        $result = Curl::post($thsi->getRedPacket('send_red_pack'), $params, $option);
 
         return $this->getMessage($result);
     }
@@ -50,12 +58,12 @@ trait RedPacket
      */
     public function sign($params, $connector = '&', $type = 'md5')
     {
-        $sgin .= $this->jointString($params) . $connector . 'key=' . self::$key;
+        $sign = $this->jointString($params) . $connector . 'key=' . self::$key;
         if ($type == 'md5') {
-            $sign = md5($sgin);
+            $sign = md5($sign);
         }
 
-        return $sgin;
+        return $sign;
     }
 
     /**

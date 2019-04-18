@@ -1,8 +1,8 @@
 # 现金红包
 
 ~~~
-    $wechat = new WeChat();
-    $wechatPat->sendRedPackent($options)
+    $wechatPay = new WeChatPay();
+    $wechatPay->sendRedPackent($options)
 ~~~
 
 **$options说明**

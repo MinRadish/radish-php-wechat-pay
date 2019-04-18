@@ -1,8 +1,8 @@
 <?php
-namespace Radish\WeChat\Traits;
+namespace Radish\WeChatPay\Traits;
 
 use Radish\Network\Curl;
-use Radish\WeChatPay\Exception\WeChatException;
+use Radish\WeChatPay\Exception\WeChatPayException;
 
 /**
 * @author Radish 1004622952@qq.com 2019-03-15
@@ -23,7 +23,7 @@ trait AccessToken
      */
     protected function getTokenApiUrl()
     {
-        return $this->tokenApiUrl . '&appid=' . self::$AppID . '&secret=' . self::$AppSecret;
+        return $this->tokenApiUrl . '&appid=' . self::$appId . '&secret=' . self::$appSecret;
     }
 
     /**
@@ -54,7 +54,7 @@ trait AccessToken
         $array = json_decode($json, true);
         if (!isset($array['access_token'])) {
             $mes = $this->getCodeMap($array['errcode']) ?: '获取access_token失败请重试!';
-            throw new WeChatException($mes, $json);
+            throw new WeChatPayException($mes, $json);
         }
         
         return $array;

@@ -7,12 +7,15 @@
 
 namespace Radish\WeChatPay;
 
-class ClassName extends AnotherClass
+abstract class WeChatPay
 {
     protected static $mch_id = '';
-    protected static $wxappid = '';
+    protected static $appId = '';
+    protected static $appSecret = '';
     protected static $key = '';
     protected static $serverIp = '';
+    protected static $apiclient_cert = '';
+    protected static $apiclient_key = '';
 
     use Traits\Common;
     use Traits\RedPacket;
@@ -23,7 +26,29 @@ class ClassName extends AnotherClass
     {
         foreach ($options as $key => $val) {
             if (property_exists($this, $key)) {
-                $this->$key = $val;
+                switch ($key) {
+                    case 'mch_id':
+                        self::$mch_id = $val;
+                        break;
+                    case 'appId':
+                            self::$appId = $val;
+                            break;
+                    case 'appSecret':
+                            self::$appSecret = $val;
+                            break;
+                    case 'key':
+                            self::$key = $val;
+                            break;
+                    case 'serverIp':
+                            self::$serverIp = $val;
+                            break;
+                    case 'apiclient_cert':
+                            self::$apiclient_cert = $val;
+                            break;
+                    case 'apiclient_key':
+                            self::$apiclient_key = $val;
+                            break;
+                }
             }
         }
     }

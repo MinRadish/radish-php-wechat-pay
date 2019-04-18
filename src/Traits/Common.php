@@ -66,25 +66,6 @@ trait Common
         return $str;
     }
 
-    /** 
-    * 获取服务器端IP地址 
-     * @return string 
-     */  
-    public function getServerIp()
-    {   
-        if (isset($_SERVER)) {
-            if($_SERVER['SERVER_ADDR']) {
-                $serverIp = $_SERVER['SERVER_ADDR'];
-            } else {
-                $serverIp = $_SERVER['LOCAL_ADDR'];
-            }
-        } else {
-            $serverIp = getenv('SERVER_ADDR');
-        }
-
-        return $serverIp;
-    }
-
     /**
      * 请求响应错误信息
      * @param  xml $xml 响应数据
@@ -100,9 +81,15 @@ trait Common
         }
     }
 
-
+    /**
+     * 拼接数组
+     * @param  array  $params    待拼接
+     * @param  string $connector 拼接符
+     * @return string            拼接后字符串
+     */
     public function jointString(array $params, $connector = '&')
     {
+        ksort($params);
         $d = $string = '';
         foreach ($params as $key => $val) {
             $val && $string .= $d . $key . '=' . $val;
@@ -110,5 +97,39 @@ trait Common
         }
 
         return $string;
+    }
+
+    /**
+     * 获取错误代码
+     * @param  string $key 代码
+     * @return String 错误代码与信息
+     */
+    protected function getCodeMap($key)
+    {
+        $codeMap = [
+            //获取access_token
+            '-1' => '系统繁忙，此时请开发者稍候再试',
+            '40001' => 'AppSecret错误或者AppSecret不属于这个公众号，请开发者确认AppSecret的正确性',
+            '40002' => '请确保grant_type字段值为client_credential',
+            '40164' => '调用接口的IP地址不在白名单中，请在接口IP白名单中进行设置。（小程序及小游戏调用不要求IP地址在白名单内。）',
+        ];
+        $info = isset($codeMap[$key]) ? $codeMap[$key] : false;
+
+        return $info;
+    }
+
+    /**
+     * 生成订单号
+     * @param  string $joint 后缀
+     * @return string        返回订单号
+     */
+    public function orderNo($joint = null)
+    {
+        if (!$joint) {
+            $joint = $this->getRandomStr(5);
+        }
+        $orderNo = date("YmdHis") . $joint;
+
+        return $orderNo;
     }
 }

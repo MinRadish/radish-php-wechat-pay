@@ -4,7 +4,7 @@
  * @authors Radish (1004622952@qq.com)
  * @date    2019-04-16 18:55:55
  */
-namespace Radish\WeChat\Traits;
+namespace Radish\WeChatPay\Traits;
 
 use Radish\Network\Curl;
 use Radish\WeChat\Exception\WeChatPayException;
@@ -38,6 +38,7 @@ trait JsSdkConfig
      */
     public function signature(array $params)
     {
+        $params['jsapi_ticket'] = $this->getJsapiTickent();
         $string = $this->jointString($params);
         
         return sha1($string);
