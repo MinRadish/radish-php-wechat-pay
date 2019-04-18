@@ -12,7 +12,7 @@
     $array = [
         'timestamp' => time(), //生成签名的时间戳
         'noncestr' => $weCharPay->getRandomStr(15),//生成签名的随机串
-        'url' => $request->url(true),
+        'url' => $request->url(true), //当前页面完整路径
     ];
     $array['signature'] = $weCharPay->signature($array);
     * wx.Config中（noncestr）S必须大写 *
