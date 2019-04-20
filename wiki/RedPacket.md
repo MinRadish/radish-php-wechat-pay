@@ -1,5 +1,6 @@
 # 现金红包
 
+# **注意错误码**
 ~~~
     $wechatPay = new WeChatPay();
     $wechatPay->sendRedPackent($options)
