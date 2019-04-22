@@ -49,13 +49,13 @@ trait JsSdkConfig
         if (!$this->apiTickent) {
             $this->apiTickent = $this->cacheGet('api_ticket');
             if (!$this->apiTickent) {
-                $array = $this->requestJsapiTicket();
+                $array = $this->requestApiTicket();
                 $this->apiTickent = $array['ticket'];
                 $this->cacheSet('api_ticket', $this->apiTickent);
             }
         }
 
-        return $this->jsapiTickent;
+        return $this->apiTickent;
     }
 
     /**
