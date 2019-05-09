@@ -12,7 +12,7 @@
     $array = [
         'timestamp' => time(), //生成签名的时间戳
         'noncestr' => $weCharPay->getRandomStr(15),//生成签名的随机串
-        'url' => $request->url(true), //当前页面完整路径
+        'url' => , //当前页面完整路径
     ];
     $array['signature'] = $weCharPay->signature($array);
     * wx.Config中（noncestr）S必须大写 *
@@ -26,7 +26,7 @@
 
 **JS写法**
 ~~~
-    wx.config({:$jsApiConfig});
+    wx.config(<?= $jsApiConfig ?>);
     wx.ready(function() {
         // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
         <!-- 死活没用还不知道是我不会用（首次加载有效果） -->
