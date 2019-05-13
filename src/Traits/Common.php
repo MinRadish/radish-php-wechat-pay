@@ -57,10 +57,10 @@ trait Common
             $chars = array_merge($chars, ["!", "@", "#", "$", "?", "|", "{", "/", ":", ";", "%", "^", "&", "*", "(", ")", "-", "_", "[", "]", "}", "<", ">", "~", "+", "=", ",", "."]);
         }
         $charsLen = count($chars) - 1;
-        shuffle($chars);                            //打乱数组顺序
+        shuffle($chars);  //打乱数组顺序
         $str = '';
         for($i=0; $i<$len; $i++){
-         $str .= $chars[mt_rand(0, $charsLen)];    //随机取出一位
+            $str .= $chars[mt_rand(0, $charsLen)]; //随机取出一位
         }
 
         return $str;
@@ -69,13 +69,21 @@ trait Common
     /**
      * 请求响应错误信息
      * @param  xml $xml 响应数据
+     * @param  String $fun 获取对应接口返回错误码信息
      * @return mixed    响应结果
      */
-    protected function getMessage($xml)
+    protected function getMessage($xml, $fun = '')
     {
         $array = $this->xmlToArray($xml);
         if ($array['return_code'] == 'FAIL') {
-            throw new \Radish\WeChatPay\Exception\WeChatPayException("支付请求失败!", $xml);
+            $msg = '支付请求失败!';
+            if ($fun && method_exists($this, $fun)) {
+                $temp = $this->$fun($array['err_code']);
+                $temp && $msg = $temp;
+            } else {
+                isset($array['err_code_des']) && $msg = $array['err_code_des'];
+            }
+            throw new \Radish\WeChatPay\Exception\WeChatPayException($msg, $xml);
         } else {
             return $array;            
         }

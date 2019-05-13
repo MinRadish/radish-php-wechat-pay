@@ -15,7 +15,9 @@
         'url' => , //当前页面完整路径
     ];
     $array['signature'] = $weCharPay->signature($array);
+
     * wx.Config中（noncestr）S必须大写 *
+
     $array['nonceStr'] = $array['noncestr']; //生成签名的随机串
     unset($array['url']);
     $array['jsApiList'] = ['updateTimelineShareData']; // 需要使用的JS接口列表
@@ -32,8 +34,8 @@
         <!-- 死活没用还不知道是我不会用（首次加载有效果） -->
         // wx.updateTimelineShareData({ 
         //     title: '信息Radish', // 分享标题
-        //     link: 'http://app5.minradish.cn/index', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-        //     imgUrl: 'http://qiniu-cdn.minradish.cn/user/face/1-1552959187.jpg', // 分享图标
+        //     link: 'http://xxx.xxxx.cn/index', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        //     imgUrl: 'http://xxx.xxxx.cn/user/face/1-1552959187.jpg', // 分享图标
         //     success: function () {
         //         alert('1');
         //     }
@@ -41,8 +43,8 @@
 
         wx.onMenuShareTimeline({
             title: '信息', // 分享标题
-            link: 'http://app5.minradish.cn/index/index/home', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: 'http://qiniu-cdn.minradish.cn/user/face/1-1552959187.jpg', // 分享图标
+            link: 'http://xxx.xxx.cn/index/index/home', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: 'http://xxx.xxx.cn/user/face/1-1552959187.jpg', // 分享图标
             success: function () {
             // 用户点击了分享后执行的回调函数
                 alert('2');

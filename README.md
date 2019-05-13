@@ -36,11 +36,11 @@
     'appId' => '微信公众号APPID',
     'appSecret' => '微信公众号APPSECRET',
     'pay' => [
-        'mch_id' => '商户号',
+        'mchId' => '商户号',
         'key' => '商户秘钥',
         'serverIp' => '服务器IP',
-        'apiclient_cert' => 证书路径, 
-        'apiclient_key' => 证书路径, 
+        'apiclientCert' => 证书路径, 
+        'apiclientKey' => 证书路径, 
     ],
 ];
 ~~~

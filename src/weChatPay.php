@@ -9,26 +9,26 @@ namespace Radish\WeChatPay;
 
 abstract class WeChatPay
 {
-    protected static $mch_id = '';
+    protected static $mchId = '';
     protected static $appId = '';
     protected static $appSecret = '';
     protected static $key = '';
     protected static $serverIp = '';
-    protected static $apiclient_cert = '';
-    protected static $apiclient_key = '';
+    protected static $apiclientCert = '';
+    protected static $apiclientKey = '';
 
     use Traits\Common;
-    use Traits\RedPacket;
     use Traits\AccessToken;
     use Traits\JsSdkConfig;
+    use Traits\EnterprisePay;
 
     public function __construct(array $options = [])
     {
         foreach ($options as $key => $val) {
             if (property_exists($this, $key)) {
                 switch ($key) {
-                    case 'mch_id':
-                        self::$mch_id = $val;
+                    case 'mchId':
+                        self::$mchId = $val;
                         break;
                     case 'appId':
                             self::$appId = $val;
@@ -42,11 +42,11 @@ abstract class WeChatPay
                     case 'serverIp':
                             self::$serverIp = $val;
                             break;
-                    case 'apiclient_cert':
-                            self::$apiclient_cert = $val;
+                    case 'apiclientCert':
+                            self::$apiclientCert = $val;
                             break;
-                    case 'apiclient_key':
-                            self::$apiclient_key = $val;
+                    case 'apiclientKey':
+                            self::$apiclientKey = $val;
                             break;
                 }
             }
