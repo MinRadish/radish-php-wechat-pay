@@ -21,6 +21,7 @@ abstract class WeChatPay
     use Traits\AccessToken;
     use Traits\JsSdkConfig;
     use Traits\EnterprisePay;
+    use Traits\WechatPay;
 
     public function __construct(array $options = [])
     {

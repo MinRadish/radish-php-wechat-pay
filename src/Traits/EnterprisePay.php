@@ -7,7 +7,6 @@
 
 namespace Radish\WeChatPay\Traits;
 
-use Radish\Network\Curl;
 
 trait EnterprisePay
 {
@@ -35,7 +34,7 @@ trait EnterprisePay
             // 'risk_info'
         ];
 
-        return $this->sendResult($params, 'send_red_pack');
+        return $this->sendResult($params, 'send_red_pack', true);
     }
 
     /**
@@ -84,7 +83,7 @@ trait EnterprisePay
             'spbill_create_ip' => self::$serverIp,
         ];
 
-        return $this->sendResult($params, 'pay_for_change');
+        return $this->sendResult($params, 'pay_for_change', true);
     }
 
     /**
@@ -100,62 +99,5 @@ trait EnterprisePay
         isset($options[$key]) && $value = $options[$key];
 
         return $value;
-    }
-
-    /**
-     * 公共的请求接口的方法
-     * @param  array  $params 请求参数
-     * @param  string $urlKey 请求地址
-     * @return mixed          响应结果
-     */
-    protected function sendResult(array $params, string $urlKey)
-    {
-        $params['sign'] = strtoupper($this->sign($params));
-        $option = [
-            CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_SSL_VERIFYHOST => false,
-            CURLOPT_SSLCERTTYPE => 'PEM',
-            CURLOPT_SSLCERT => self::$apiclientCert,
-            CURLOPT_SSLKEYTYPE => 'PEM',
-            CURLOPT_SSLKEY => self::$apiclientKey,
-        ];
-        $params = $this->arrayToXml($params, false);
-        $result = Curl::post($this->getApiUrl($urlKey), $params, $option);
-
-        return $this->getMessage($result);
-    }
-
-    /**
-     * 生成签名验签
-     * @param  Array $params    请求参数
-     * @param  string $connector 拼接符
-     * @param  string $type      加密方式
-     * @return string            加密后字段
-     */
-    public function sign($params, $connector = '&', $type = 'md5')
-    {
-        $sign = $this->jointString($params, $connector) . $connector . 'key=' . self::$key;
-        if ($type == 'md5') {
-            $sign = md5($sign);
-        }
-
-        return $sign;
-    }
-
-    /**
-     * 获取请求连接
-     * @param  string $key 连接类型
-     * @return string      请求地址
-     */
-    protected function getApiUrl($key)
-    {
-        $urlMap = [
-            //POST 红包接口 1800次/分钟
-            'send_red_pack' => 'https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack',
-            //POST 企业付款到用户微信零钱  1800次/分钟
-            'pay_for_change' => 'https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers'
-        ];
-
-        return $urlMap[$key];
     }
 }
