@@ -77,7 +77,7 @@ trait Common
     protected function getMessage($xml, $fun = '')
     {
         $array = $this->xmlToArray($xml);
-        if ($array['return_code'] == 'FAIL') {
+        if ($array['return_code'] == 'FAIL' || $array['result_code'] == 'FAIL') {
             $msg = '支付请求失败!';
             if ($fun && method_exists($this, $fun)) {
                 $temp = $this->$fun($array['err_code']);
@@ -156,14 +156,11 @@ trait Common
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_SSL_VERIFYHOST => false,
         ];
-
         if ($sslCert) {
-            $option = array_merge($option, [
-                CURLOPT_SSLCERTTYPE => 'PEM',
-                CURLOPT_SSLCERT => self::$apiclientCert,
-                CURLOPT_SSLKEYTYPE => 'PEM',
-                CURLOPT_SSLKEY => self::$apiclientKey,
-            ]);
+            $option[CURLOPT_SSLCERTTYPE] = 'PEM';
+            $option[CURLOPT_SSLCERT] = self::$apiclientCert;
+            $option[CURLOPT_SSLKEYTYPE] = 'PEM';
+            $option[CURLOPT_SSLKEY] = self::$apiclientKey;
         }
         $params = $this->arrayToXml($params, false);
         $result = Curl::post($this->getApiUrl($urlKey), $params, $option);
@@ -202,6 +199,8 @@ trait Common
             'pay_for_change' => 'https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers',
             //POST 统一下单
             'order_unify' => 'https://api.mch.weixin.qq.com/pay/unifiedorder',
+            //POST 申请退款
+            'order_refund' => 'https://api.mch.weixin.qq.com/secapi/pay/refund',
         ];
 
         return $urlMap[$key];
