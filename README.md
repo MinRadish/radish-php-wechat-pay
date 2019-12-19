@@ -1,4 +1,5 @@
 # 微信支付
+
 *需自定义一个类并继承 Radish\WeChatPay\WeChatPay重写构造函数进行相关配置*
 
 *自定义相关参数保存调用接口凭证*
@@ -8,6 +9,7 @@
 **public function cacheSet($key, $val, $timeout = 7140);**
 
 ## api示例说明
+
 ~~~
     $wechatPay = new WeChatPay();
     $wechatPay->sendRedPackent($options)

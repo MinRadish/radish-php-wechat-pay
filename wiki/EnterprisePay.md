@@ -1,6 +1,7 @@
 # 现金红包
 
 # **注意错误码**
+
 ~~~
     $wechatPay = new WeChatPay();
     $wechatPay->sendRedPackent($options)
@@ -21,6 +22,7 @@
 |scene_id|否|场景id发放红包使用场景，红包金额大于200或者小于1元时必传|
 
 **scene_id取值范围**
+
 ~~~
 PRODUCT_1:商品促销
 PRODUCT_2:抽奖
@@ -51,6 +53,7 @@ PRODUCT_8:税务刮奖
 |desc|是|企业付款备注，必填。注意：备注中的敏感词会被转成字符*|
 
 **内部预定义参数说明**
+
 |字段|是否必填|说明|
 |:--|:--|:--|
 |mch_appid|是|申请商户号的appid或商户号绑定的appid|

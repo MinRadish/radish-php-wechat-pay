@@ -22,6 +22,24 @@ $params = [
 $result = $wechatPay->orderUnify($params);
 ~~~
 
+## 公众支付
+
+- 返回给前端
+
+~~~
+    $signParams = [
+        'appId' => config('wechat.appId'),
+        'timeStamp' => time() . '',
+        'nonceStr' => $wechatPay->getRandomStr(16),
+        'package' => 'prepay_id=' . $result['prepay_id'],
+        'signType' => 'MD5',
+    ];
+    $signParams['paySign'] = $wechatPay->sign($signParams);
+    unset($signParams['appId']);
+
+    return $signParams;
+~~~
+
 ## 回调验证
 
 - $params为微信请求参数
